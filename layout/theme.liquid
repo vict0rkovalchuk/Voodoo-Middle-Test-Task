@@ -9,10 +9,23 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     {{ content_for_header }}
     <!-- Header hook for plugins -->
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+    </style>
+
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
   </head>
-  <body class="bg-red-900">
+  <body class="bg-[#FCF7E6]" >
+    {% section 'header' %}
     <main role="main">
       {{ content_for_layout }}
     </main>
