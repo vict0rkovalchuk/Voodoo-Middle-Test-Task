@@ -1,0 +1,36 @@
+{% if pagination.pages > 0 %}
+
+    <div class="pagination mt-20">
+
+      <ul class="page flex justify-center items-center gap-2.5">
+        {% for part in pagination.parts %}
+          {% assign var1 = part.title %}
+          {% capture testValue %}{{ var1 | json }}{% endcapture %}
+          
+          {% capture title_type %}
+            {% if testValue contains '"' %}
+              string
+            {% else %}
+              number
+            {% endif %}
+          {% endcapture %}
+
+          {% if part.is_link == false and title_type contains 'number' %}
+            <a class="page__numbers onNumber flex justify-center items-center cursor-pointer w-[30px] h-[30px] sm:w-[39px] sm:h-[39px] rounded-[50%] active bg-[#1E1E1E] text-white text-sm font-light leading-normal pointer-events-none" href="{{ part.url }}">
+              {{ part.title }}
+            </a>
+          {% elsif part.is_link == false and title_type contains 'string' %}
+            <a class="page__numbers onNumber flex justify-center items-center cursor-pointer w-[30px] h-[30px] sm:w-[39px] sm:h-[39px] rounded-[50%] border-[1px] border-solid border-black text-[#1e1e1e] font-light leading-normal pointer-events-none" href="{{ part.url }}">
+              {{ part.title }}
+            </a>
+          {% else %}
+            <a class="page__numbers onNumber flex justify-center items-center cursor-pointer w-[30px] h-[30px] sm:w-[39px] sm:h-[39px] rounded-[50%] border-[1px] border-solid border-black text-[#1e1e1e] font-light leading-normal" href="{{ part.url }}">
+              {{ part.title }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      
+    </div>
+
+{% endif %}
