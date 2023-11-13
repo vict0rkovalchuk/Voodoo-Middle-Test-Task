@@ -1,4 +1,4 @@
-{% paginate collections.all.products by 4 %}
+{% paginate collections.all.products by section.settings.number_of_products_per_page %}
   <div class="cards mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
     {% for product in collections.all.products %}
       {% render 'product-card', product: product %}
@@ -9,3 +9,17 @@
     {% render 'pagination', pagination: paginate %}
   </div>
 {% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Template Index",
+    "settings": [
+      {
+        "type": "number",
+        "id": "number_of_products_per_page",
+        "default": 4,
+        "label": "Number of products per page"
+      }
+    ]
+  }
+{% endschema %}
