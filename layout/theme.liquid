@@ -34,16 +34,228 @@
         max-height: 100vh;
         padding: 1em;
       }
+
+      input.sidenav__item-number::-webkit-outer-spin-button,
+      input.sidenav__item-number::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     </style>
 
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
   </head>
   <body class="bg-[#FCF7E6]" >
+    <div
+      id="sideCart"
+      class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden duration-[0.7s] text-[#FCF7E6] px-10 pt-12 w-full sm:w-[445px] md:w-6/12 lg:w-[445px]"
+    >
+      <div
+        class="sidenav__header pb-[22px] flex justify-between items-center border-b-[1px] border-solid border-[#FCF7E6]"
+      >
+        <div class="sidenav__header-title text-2xl font-bold">
+          Shopping Cart
+        </div>
+        <div class="sidenav__header-close text-3xl">
+          <a
+            href="javascript:void(0)"
+            class="closebtn text-[#FCF7E6]"
+            onclick="closeCart()"
+            >&times;</a
+          >
+        </div>
+      </div>
+      {% if cart.item_count > 0 %}
+         <form action="{{ routes.cart_url }}" method="POST" novalidate>
+          <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">
+            {% for item in cart.items %}
+              <div class="sidenav__item flex justify-between h-[74px]" data-id="8788058636569">
+                <div class="sidenav__item-info flex gap-[18px]">
+                  <div class="sidenav__item-img w-[74px] rounded border-[1px] border-solid border-white border-opacity-50 flex justify-center">
+                    <a href="{{ item.url }}">
+                      {% if item.image %}
+                        <img src="{{ item.image |  img_url: 'small' }}" alt="{{ item.title | escape }}" class="h-full object-cover rounded">
+                      {% else %}
+                        {{ 'product-1' |  placeholder_svg_tag: 'h-full object-cover rounded' }}
+                      {% endif %}
+                    </a>
+                  </div>
+                  <div class="sidenav__item-info-wrapper flex flex-col justify-between text-sm font-bold">
+                    <div class="sidenav__item-title">
+                      <a href="{{ item.url }}">
+                        {{ item.product.title |  | truncatewords: 4 }}
+                      </a>
+                    </div>
+                    <div class="sidenav__item-price">{{ item.line_price | money }}</div>
+                    <div class="sidenav__item-counter h-[20px] flex">
+                      <button type="submit" name="update"
+                      {% if item.quantity == 1 %}
+                        class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center cursor-not-allowed opacity-30"
+                      {% else %}
+                        class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center"
+                      {% endif %}
+                      {% if item.quantity == 1 %}
+                        disabled
+                      {% endif %}
+                      >
+                        -
+                      </button>
+                      <input 
+                        class="sidenav__item-number h-[20px] w-[20px] block bg-[#111] text-center pointer-events-none cursor-not-allowed" 
+                        type="number" 
+                        name="updates[]" 
+                        value="{{ item.quantity }}"
+                        id="updates_{{ forloop.index }}"
+                      >
+                      <button type="submit" name="update" class="sidenav__item-counter-plus h-[20px] w-[20px] flex justify-center items-center">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="sidenav__item-delete cursor-pointer" data-id="8788058636569">
+                    {% render 'icon-delete' %}
+                  </a>
+              </div>
+            {% endfor %}
+          </div>
+        </form> 
+          {% comment %} <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">
+            {% for item in cart.items %}
+              <div class="sidenav__item flex justify-between h-[74px]" data-id="8788058636569">
+                <div class="sidenav__item-info flex gap-[18px]">
+                  <div class="sidenav__item-img w-[74px] rounded border-[1px] border-solid border-white border-opacity-50 flex justify-center">
+                    <a href="{{ item.url }}">
+                      {% if item.image %}
+                        <img src="{{ item.image |  img_url: 'small' }}" alt="{{ item.title | escape }}" class="h-full object-cover rounded">
+                      {% else %}
+                        {{ 'product-1' |  placeholder_svg_tag: 'h-full object-cover rounded' }}
+                      {% endif %}
+                    </a>
+                  </div>
+                  <div class="sidenav__item-info-wrapper flex flex-col justify-between text-sm font-bold">
+                    <div class="sidenav__item-title">
+                      <a href="{{ item.url }}">
+                        {{ item.product.title |  | truncatewords: 4 }}
+                      </a>
+                    </div>
+                    <div class="sidenav__item-price">{{ item.line_price | money }}</div>
+                    <div class="sidenav__item-counter h-[20px] flex">
+                      {% assign quantity_to_update_minus = item.quantity |  minus: 1 %}
+
+                      <button onclick="updateQuantity({{ forloop.index }}, {{ quantity_to_update_minus }})"
+                      {% if item.quantity == 1 %}
+                        class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center cursor-not-allowed opacity-30"
+                      {% else %}
+                        class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center"
+                      {% endif %}
+                      {% if item.quantity == 1 %}
+                        disabled
+                      {% endif %}
+                      >
+                        -
+                      </button>
+                      <input 
+                        class="sidenav__item-number h-[20px] w-[20px] block bg-[#111] text-center pointer-events-none cursor-not-allowed" 
+                        type="number" 
+                        name="updates[]" 
+                        value="{{ item.quantity }}"
+                        id="updates_{{ forloop.index }}"
+                      >
+                      {% assign quantity_to_update_plus = item.quantity |  plus: 1 %}
+                      
+                      <button onclick="updateQuantity({{ forloop.index }}, {{ quantity_to_update_plus }})" class="sidenav__item-counter-plus h-[20px] w-[20px] flex justify-center items-center">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                  <div onclick="updateQuantity({{ forloop.index }}, 0)" class="sidenav__item-delete cursor-pointer">
+                    {% render 'icon-delete' %}
+                  </div>
+              </div>
+            {% endfor %}
+          </div> {% endcomment %}
+      {% else %}
+        <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">
+          Your cart is empty
+        </div>
+      {% endif %}
+      <div
+        class="sidenav__footer pt-[35px] pb-[35px] flex justify-between items-center border-t-[1px] border-solid border-[#FCF7E6]"
+      >
+        <div class="sidenav__footer-total text-sm font-bold uppercase">
+          total
+        </div>
+        <div
+          class="sidenav__footer-price text-right text-sm font-bold uppercase"
+        >
+          {{ cart.total_price | money }}
+        </div>
+      </div>
+    </div>
+
     {% section 'header' %}
     <main role="main" class="px-6 xl:px-28 mt-6 md:mt-[100px] mb-[59px] xl:mb-48">
       {{ content_for_layout }}
     </main>
     {% section 'footer' %}
   </body>
+
+  {% comment %} <script>
+   function updateQuantity(line, qty) {
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity: qty, line: line })
+      })
+      .then(response => response.json()).then(data => 
+        console.log(data)
+      )
+      .catch((error) => console.log(error));
+    }
+
+    updateCart() {}
+  </script> {% endcomment %}
+
+  <script>
+    function closeCart() {
+      document.getElementById('sideCart').style.right = '-100%';
+    }
+
+    // Update Cart
+    const wrapper = document.querySelector('.sidenav__items ');
+    wrapper.addEventListener('click', (e) => {
+      if(e.target.classList.contains('sidenav__item-counter-minus') || e.target.classList.contains('sidenav__item-counter-plus')) {
+        e.preventDefault();
+        const target = e.target;
+        const counterParent = target.closest('.sidenav__item-counter');
+        const qtyInput = counterParent.querySelector('input.sidenav__item-number ');
+        const minusBtn = counterParent.querySelector('.sidenav__item-counter-minus');
+
+        switch (target.textContent.trim()) {
+          case '-':
+            qtyInput.setAttribute('value', +qtyInput.value - 1)
+            if(+qtyInput.value < 2) {
+              setTimeout(()=>{
+                target.classList.add('cursor-not-allowed', 'opacity-30');
+                target.setAttribute('disabled', 'disabled');
+              }, 0);
+            }
+            break;
+          case '+':
+          var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
+          .then(response => response.json())
+          .then(data => console.log(data));
+            if(+qtyInput.value === 1) {
+              minusBtn.classList.remove('cursor-not-allowed', 'opacity-30');
+              minusBtn.removeAttribute('disabled');
+            }
+            qtyInput.setAttribute('value', +qtyInput.value + 1);
+            break;
+        }
+      }
+    })
+  </script>
 </html>
