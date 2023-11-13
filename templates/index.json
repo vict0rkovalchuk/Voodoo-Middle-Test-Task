@@ -2,7 +2,10 @@
   "sections": {
     "template": {
       "type": "template-index"
+    },
+    "accordion": {
+      "type": "accordion"
     }
   },
-  "order": ["template"]
+  "order": ["accordion", "template"]
 }

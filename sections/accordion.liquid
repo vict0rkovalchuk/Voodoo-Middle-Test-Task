@@ -1,0 +1,68 @@
+<div class="accordeon row">
+  <div class="col">
+    <div class="tabs overflow-hidden rounded">
+      <div class="tab">
+        <input
+          class="absolute opacity-0 z-0"
+          type="checkbox"
+          id="chck1"
+        />
+        <label
+          class="tab-label bg-black p-6 flex justify-between cursor-pointer hover:bg-[#1a252f] after:content-['\276F'] after:w-6 after:h-6 after:text-[#fcf7e6] after:text-center after:rotate-90 after:transition-all after:duration-[0.35s]"
+          for="chck1"
+        >
+          <div
+            class="accordeon__text flex gap-4 sm:gap-12 items-center"
+          >
+            <div class="accordeon__alert flex gap-1.5">
+              <div class="accordeon__alert-icon">
+                {% render 'icon-alert' %}
+              </div>
+              <div
+                class="accordeon__alert-text uppercase text-[#FCF7E6] text-base font-bold"
+              >
+                ALpHA
+              </div>
+            </div>
+            <div
+              class="accordeon__descr text-[#FCF7E6] text-sm font-medium"
+            >
+              <span class="hidden sm:block"
+                >Important info regarding our service</span
+              >
+              <span class="sm:hidden">Important info</span>
+            </div>
+          </div>
+        </label>
+        <div
+          class="tab-content bg-black text-[#FCF7E6] transition-all duration-[0.35s] max-h-0 py-0 px-[1em]"
+        >
+          {% if section.settings.text.size > 0 %}
+            {{ section.settings.text }}
+          {% else %}
+            No info
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Accordion",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Content for accordeon",
+        "default": "Content"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Accordion"
+      }
+    ]
+  }
+{% endschema %}

@@ -21,6 +21,21 @@
       }
     </style>
 
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      input:checked + .tab-label::after {
+        transform: rotate(-90deg);
+      }
+      input:checked ~ .tab-content {
+        max-height: 100vh;
+        padding: 1em;
+      }
+    </style>
+
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
   </head>
