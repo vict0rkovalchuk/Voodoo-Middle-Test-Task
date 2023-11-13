@@ -1,0 +1,54 @@
+<footer
+      class="border-t-[1px] border-solid border-black py-12 md:py-20 px-12 md:px-28 bg-white"
+    >
+      <div class="container mx-auto">
+        <div
+          class="footer grid grid-cols-1 md:grid-cols-4 items-center gap-12 md:gap-6 text-black text-sm font-bold leading-normal uppercase"
+        >
+          {% if section.settings.show_logo %}
+            <div class="footer__icon flex justify-center order-4 md:order-none">
+            <a href="#" class="w-[82px] h-[82px]">
+              {% render 'icon-voodoo' %}
+            </a>
+          </div>
+          {% endif %}
+
+          <div class="footer__menu flex flex-col gap-1.5">
+            {% for link in linklists[section.settings.menu].links %}
+              <a target="_blank" href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+          </div>
+          <div class="footer__policy flex flex-col gap-1.5">
+            {% for policy in shop.policies %}
+              <a target="_blank" href="{{ policy.url }}">{{ policy.title }}</a>
+            {% endfor %}
+          </div>
+          <div class="footer__social flex flex-col gap-1.5">
+            <a href="#">About second chance</a>
+            <a href="#">Career</a>
+            <a href="#">facebook</a>
+            <a href="#">instagram</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    {% schema %}
+      {
+        "name": "Footer",
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Footer Menu",
+            "default": "footer"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_logo",
+            "label": "Show logo",
+            "default": true
+          }
+        ]
+      }
+    {% endschema %}
