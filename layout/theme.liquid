@@ -56,10 +56,16 @@
     <script>
       function openCartDrawer() {
         document.getElementById('sideCart').style.right = '0';
+        document.querySelector('.sidenav-overlay').style.left = '0';
+        document.querySelector('.sidenav-overlay').style.opacity = '1';
+        document.body.style.overflow = 'hidden';
       }
 
       function closeCartDrawer() {
         document.getElementById('sideCart').style.right = '-100%';
+        document.querySelector('.sidenav-overlay').style.left = '-100%';
+        document.querySelector('.sidenav-overlay').style.opacity = '0';
+        document.body.style.overflow = '';
       }
 
       async function updateCartDrawer() {
@@ -135,6 +141,14 @@
 
         // Close cart drawer
         document.querySelector('.sidenav__header-close').addEventListener('click', () => {
+          closeCartDrawer();
+        })
+
+        document.querySelector(".sidenav-overlay .sidenav").addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+
+        document.querySelector('.sidenav-overlay').addEventListener('click', () => {
           closeCartDrawer();
         })
       }

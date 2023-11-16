@@ -1,6 +1,7 @@
-<div
-  id="sideCart"
-  class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden duration-[0.7s] text-[#FCF7E6] px-10 pt-12 w-full sm:w-[445px] md:w-6/12 lg:w-[445px]"
+<div class="sidenav-overlay transition-opacity z-20 bg-black opacity-0 bg-opacity-50 w-full h-full fixed top-0 left-[-100%]">
+  <div 
+id="sideCart"
+class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden duration-[0.7s] text-[#FCF7E6] px-10 pt-12 w-full sm:w-[445px] md:w-6/12 lg:w-[445px]"
 >
   <div
     class="sidenav__header pb-[22px] flex justify-between items-center border-b-[1px] border-solid border-[#FCF7E6]"
@@ -100,6 +101,7 @@
       </div>
     {% endif %}
   {% endform %}
+</div>
 </div>
 
 {% schema %}
