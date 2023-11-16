@@ -1,8 +1,10 @@
+
 <div class="sidenav-overlay transition-opacity z-20 bg-black opacity-0 bg-opacity-50 w-full h-full fixed top-0 left-[-100%]">
   <div 
 id="sideCart"
 class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden duration-[0.7s] text-[#FCF7E6] px-10 pt-12 w-full sm:w-[445px] md:w-6/12 lg:w-[445px]"
 >
+
   <div
     class="sidenav__header pb-[22px] flex justify-between items-center border-b-[1px] border-solid border-[#FCF7E6]"
   >
@@ -17,11 +19,14 @@ class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden
       >
     </div>
   </div>
+  <div class="sidenav-header-loader mt-6 flex justify-center">
+    {% render 'icon-cart-header-loader' %}
+  </div>
   {% form 'cart', cart, class: 'cart-drawer-form' %}
     {% if cart.item_count > 0 %}
       <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">
         {% for item in cart.items %}
-          <div class="sidenav__item flex justify-between h-[74px]" data-id="8788058636569" data-line-item-key="{{ item.key }}">
+          <div class="sidenav__item flex justify-between h-[74px]" data-index="{{ forloop.index }}" data-line-item-key="{{ item.key }}">
             <div class="sidenav__item-info flex gap-[18px]">
               <div class="sidenav__item-img w-[74px] rounded border-[1px] border-solid border-white border-opacity-50 flex justify-center">
                 <a href="{{ item.url }}">
@@ -65,9 +70,14 @@ class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden
                 </div>
               </div>
             </div>
-              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="sidenav__item-delete cursor-pointer" data-id="8788058636569">
+            <div class="flex flex-col justify-between items-center">
+              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="sidenav__item-delete cursor-pointer">
                 {% render 'icon-delete' %}
               </a>
+              <div class="sidenav-loader">
+                {% render 'icon-cart-item-loader' %}
+              </div>
+            </div>
           </div>
         {% endfor %}
       </div>
