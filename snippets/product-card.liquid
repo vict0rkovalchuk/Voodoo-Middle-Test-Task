@@ -1,13 +1,19 @@
 <div class="card">
   <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
-    <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10">
+    <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
       used
     </div>
-    <img class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer" src="{{ product.featured_image |  img_url: 'medium' }}" alt="{{ product.featured_image.alt }}">
+    <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+      {% render 'icon-heart-transparent' %}
+    </div>
+    <img
+      class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+      src="{{ product.featured_image |  img_url: 'medium' }}"
+      alt="{{ product.featured_image.alt }}">
   </div>
   <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
     <div class="card__descr-info font-bold">
-      <a href="{{ product.url }}" class="card__descr-name">{{ product.title |  truncate: 20 }}</a>
+      <a href="{{ product.url }}" class="card__descr-name">{{ product.title | truncate: 20 }}</a>
       <div class="card__descr-price" data-price="100.00">{{ product.price | money }}</div>
     </div>
     <div class="card__descr-text flex flex-col items-end">
@@ -17,12 +23,19 @@
   </div>
   <div class="card__btn mt-3">
     <form method="post" action="/cart/add">
-      <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
-      <input min="1" type="hidden" id="quantity" name="quantity" value="1"/>
+      <input
+        type="hidden"
+        name="id"
+        value="{{ product.variants.first.id }}" />
+      <input
+        min="1"
+        type="hidden"
+        id="quantity"
+        name="quantity"
+        value="1" />
       <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
         Add to cart
       </button>
     </form>
   </div>
 </div>
-

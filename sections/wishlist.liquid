@@ -1,0 +1,331 @@
+<div class="wishlist-overlay transition-opacity z-20 bg-black opacity-0 bg-opacity-50 w-full h-full fixed top-0 left-[-100%] duration-[0.7s]">
+  <div id="wishlist" class="wishlist bg-[#FCF7E6] z-20 fixed top-[85px] right-[-100%] bottom-[85px] pt-[46px] pr-[68px] pl-[40px] pb-[65px] overflow-auto">
+    <header class="wishlist_header pb-[22px] flex justify-between">
+      <div class="wishlist_header-title text-black text-2xl font-bold">
+        Wishlist
+      </div>
+      <div class="wishlist_header-close text-2xl cursor-pointer">
+        x
+      </div>
+    </header>
+    <div class="wishlist_divider h-[1px] bg-black"></div>
+    <div class="wishlist_tabs pt-[34px]">
+      <div>
+        <!-- Tabs -->
+        <ul id="tabs" class="flex gap-[30px] items-center">
+          <li class="text-black text-sm font-bold">
+            <a id="default-tab" href="#first">Default List</a>
+          </li>
+          <li class="text-black text-sm font-bold">
+            <a href="#second">My custom wishlist</a>
+          </li>
+          <li class="text-black text-sm font-bold">
+            <a href="#third">NewYear gifts</a>
+          </li>
+          <li class="bg-black rounded py-[9px] px-[15px] text-white text-sm font-bold">
+            <a href="#fourth">Create new list</a>
+          </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div id="tab-contents" class="pt-[25px]">
+          <div id="first" class="">
+            <div class="cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+              <div class="card">
+                <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+                  <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
+                    used
+                  </div>
+                  <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+                    {% render 'icon-heart-dark' %}
+                  </div>
+                  <img
+                    class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+                    src="//voodooecom-middle-test-task.myshopify.com/cdn/shop/files/f08970c8e38f4b8ba44aae9801613166_9366_medium.webp?v=1699633538"
+                    alt="БІГОВІ КРОСІВКИ ADIDAS BY STELLA MCCARTNEY SOLARGLIDE">
+                </div>
+                <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
+                  <div class="card__descr-info font-bold">
+                    <a href="/products/%D0%B1%D1%96%D0%B3%D0%BE%D0%B2%D1%96-%D0%BA%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-adidas-by-stella-mccartney-solarglide" class="card__descr-name">БІГОВІ КРОСІВКИ A...</a>
+                    <div class="card__descr-price" data-price="100.00">₴5,999.00</div>
+                  </div>
+                  <div class="card__descr-text flex flex-col items-end">
+                    <div class="card__descr-condition font-medium">Condition</div>
+                    <div class="card__descr-fact font-normal">Slightly used</div>
+                  </div>
+                </div>
+                <div class="card__btn mt-3">
+                  <form method="post" action="/cart/add">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="43263283232949">
+                    <input
+                      min="1"
+                      type="hidden"
+                      id="quantity"
+                      name="quantity"
+                      value="1">
+                    <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
+                      Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+                  <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
+                    used
+                  </div>
+                  <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+                    {% render 'icon-heart-dark' %}
+                  </div>
+                  <img
+                    class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+                    src="//voodooecom-middle-test-task.myshopify.com/cdn/shop/files/f08970c8e38f4b8ba44aae9801613166_9366_medium.webp?v=1699633538"
+                    alt="БІГОВІ КРОСІВКИ ADIDAS BY STELLA MCCARTNEY SOLARGLIDE">
+                </div>
+                <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
+                  <div class="card__descr-info font-bold">
+                    <a href="/products/%D0%B1%D1%96%D0%B3%D0%BE%D0%B2%D1%96-%D0%BA%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-adidas-by-stella-mccartney-solarglide" class="card__descr-name">БІГОВІ КРОСІВКИ A...</a>
+                    <div class="card__descr-price" data-price="100.00">₴5,999.00</div>
+                  </div>
+                  <div class="card__descr-text flex flex-col items-end">
+                    <div class="card__descr-condition font-medium">Condition</div>
+                    <div class="card__descr-fact font-normal">Slightly used</div>
+                  </div>
+                </div>
+                <div class="card__btn mt-3">
+                  <form method="post" action="/cart/add">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="43263283232949">
+                    <input
+                      min="1"
+                      type="hidden"
+                      id="quantity"
+                      name="quantity"
+                      value="1">
+                    <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
+                      Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+                  <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
+                    used
+                  </div>
+                  <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+                    {% render 'icon-heart-dark' %}
+                  </div>
+                  <img
+                    class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+                    src="//voodooecom-middle-test-task.myshopify.com/cdn/shop/files/f08970c8e38f4b8ba44aae9801613166_9366_medium.webp?v=1699633538"
+                    alt="БІГОВІ КРОСІВКИ ADIDAS BY STELLA MCCARTNEY SOLARGLIDE">
+                </div>
+                <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
+                  <div class="card__descr-info font-bold">
+                    <a href="/products/%D0%B1%D1%96%D0%B3%D0%BE%D0%B2%D1%96-%D0%BA%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-adidas-by-stella-mccartney-solarglide" class="card__descr-name">БІГОВІ КРОСІВКИ A...</a>
+                    <div class="card__descr-price" data-price="100.00">₴5,999.00</div>
+                  </div>
+                  <div class="card__descr-text flex flex-col items-end">
+                    <div class="card__descr-condition font-medium">Condition</div>
+                    <div class="card__descr-fact font-normal">Slightly used</div>
+                  </div>
+                </div>
+                <div class="card__btn mt-3">
+                  <form method="post" action="/cart/add">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="43263283232949">
+                    <input
+                      min="1"
+                      type="hidden"
+                      id="quantity"
+                      name="quantity"
+                      value="1">
+                    <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
+                      Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+                  <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
+                    used
+                  </div>
+                  <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+                    {% render 'icon-heart-dark' %}
+                  </div>
+                  <img
+                    class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+                    src="//voodooecom-middle-test-task.myshopify.com/cdn/shop/files/f08970c8e38f4b8ba44aae9801613166_9366_medium.webp?v=1699633538"
+                    alt="БІГОВІ КРОСІВКИ ADIDAS BY STELLA MCCARTNEY SOLARGLIDE">
+                </div>
+                <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
+                  <div class="card__descr-info font-bold">
+                    <a href="/products/%D0%B1%D1%96%D0%B3%D0%BE%D0%B2%D1%96-%D0%BA%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-adidas-by-stella-mccartney-solarglide" class="card__descr-name">БІГОВІ КРОСІВКИ A...</a>
+                    <div class="card__descr-price" data-price="100.00">₴5,999.00</div>
+                  </div>
+                  <div class="card__descr-text flex flex-col items-end">
+                    <div class="card__descr-condition font-medium">Condition</div>
+                    <div class="card__descr-fact font-normal">Slightly used</div>
+                  </div>
+                </div>
+                <div class="card__btn mt-3">
+                  <form method="post" action="/cart/add">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="43263283232949">
+                    <input
+                      min="1"
+                      type="hidden"
+                      id="quantity"
+                      name="quantity"
+                      value="1">
+                    <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
+                      Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+                  <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
+                    used
+                  </div>
+                  <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+                    {% render 'icon-heart-dark' %}
+                  </div>
+                  <img
+                    class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+                    src="//voodooecom-middle-test-task.myshopify.com/cdn/shop/files/f08970c8e38f4b8ba44aae9801613166_9366_medium.webp?v=1699633538"
+                    alt="БІГОВІ КРОСІВКИ ADIDAS BY STELLA MCCARTNEY SOLARGLIDE">
+                </div>
+                <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
+                  <div class="card__descr-info font-bold">
+                    <a href="/products/%D0%B1%D1%96%D0%B3%D0%BE%D0%B2%D1%96-%D0%BA%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-adidas-by-stella-mccartney-solarglide" class="card__descr-name">БІГОВІ КРОСІВКИ A...</a>
+                    <div class="card__descr-price" data-price="100.00">₴5,999.00</div>
+                  </div>
+                  <div class="card__descr-text flex flex-col items-end">
+                    <div class="card__descr-condition font-medium">Condition</div>
+                    <div class="card__descr-fact font-normal">Slightly used</div>
+                  </div>
+                </div>
+                <div class="card__btn mt-3">
+                  <form method="post" action="/cart/add">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="43263283232949">
+                    <input
+                      min="1"
+                      type="hidden"
+                      id="quantity"
+                      name="quantity"
+                      value="1">
+                    <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
+                      Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+                  <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
+                    used
+                  </div>
+                  <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
+                    {% render 'icon-heart-dark' %}
+                  </div>
+                  <img
+                    class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
+                    src="//voodooecom-middle-test-task.myshopify.com/cdn/shop/files/f08970c8e38f4b8ba44aae9801613166_9366_medium.webp?v=1699633538"
+                    alt="БІГОВІ КРОСІВКИ ADIDAS BY STELLA MCCARTNEY SOLARGLIDE">
+                </div>
+                <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
+                  <div class="card__descr-info font-bold">
+                    <a href="/products/%D0%B1%D1%96%D0%B3%D0%BE%D0%B2%D1%96-%D0%BA%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-adidas-by-stella-mccartney-solarglide" class="card__descr-name">БІГОВІ КРОСІВКИ A...</a>
+                    <div class="card__descr-price" data-price="100.00">₴5,999.00</div>
+                  </div>
+                  <div class="card__descr-text flex flex-col items-end">
+                    <div class="card__descr-condition font-medium">Condition</div>
+                    <div class="card__descr-fact font-normal">Slightly used</div>
+                  </div>
+                </div>
+                <div class="card__btn mt-3">
+                  <form method="post" action="/cart/add">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="43263283232949">
+                    <input
+                      min="1"
+                      type="hidden"
+                      id="quantity"
+                      name="quantity"
+                      value="1">
+                    <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
+                      Add to cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="second" class="hidden">
+            Second tab
+          </div>
+          <div id="third" class="hidden">
+            Third tab
+          </div>
+          <div id="fourth" class="hidden">
+            Fourth tab
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wishlist_divider h-[1px] bg-black mt-[40px]"></div>
+    <button class="wishlist_button mt-[40px] rounded bg-black py-4 w-64 text-white text-center text-sm font-bold">
+      DELETE Default List
+    </button>
+  </div>
+</div>
+
+<script>
+    let tabsContainer = document.querySelector("#tabs");
+  
+    let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
+  
+    tabTogglers.forEach(function(toggler) {
+      toggler.addEventListener("click", function(e) {
+        e.preventDefault();
+  
+        let tabName = this.getAttribute("href");
+  
+        let tabContents = document.querySelector("#tab-contents");
+  
+        for (let i = 0; i < tabContents.children.length; i++) {
+          
+          tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px", "bg-white");  tabContents.children[i].classList.remove("hidden");
+          if ("#" + tabContents.children[i].id === tabName) {
+            continue;
+          }
+          tabContents.children[i].classList.add("hidden");
+          
+        }
+      });
+    });
+</script>
+
+{% schema %}
+  {
+    "name": "Wishlist"
+  }
+{% endschema %}

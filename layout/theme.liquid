@@ -10,15 +10,14 @@
     {{ content_for_header }}
     <!-- Header hook for plugins -->
 
-    <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap"
-    rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
     <style>
       body {
-        font-family: 'Roboto', sans-serif;
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: 'Roboto'
+        , sans-serif;
+        font-family: 'Space Grotesk'
+        , sans-serif;
       }
 
       input:checked + .tab-label::after {
@@ -33,14 +32,16 @@
       input.sidenav__item-number::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
-      } 
+      }
     </style>
 
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
     <script src="{{ 'cart.js' | asset_url }}" defer></script>
+    <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
   </head>
-  <body class="bg-[#FCF7E6]" >
+  <body class="bg-[#FCF7E6]">
+    {% section 'wishlist' %}
     {% section 'cart-drawer' %}
     {% section 'header' %}
     <main role="main" class="px-6 xl:px-28 mt-6 md:mt-[100px] mb-[59px] xl:mb-48">
