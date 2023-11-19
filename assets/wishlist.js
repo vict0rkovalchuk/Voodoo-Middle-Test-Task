@@ -36,7 +36,7 @@ if (wishlistList) {
       .querySelector('.wishlist_tabs #tabs .create_tab')
       .insertAdjacentHTML(
         'beforebegin',
-        `<li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="1">
+        `<li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="${item.id}">
     ${item.name}
     </li>`
       );
