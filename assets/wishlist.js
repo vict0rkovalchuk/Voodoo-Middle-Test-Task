@@ -1,3 +1,57 @@
+// Get wishlists from LocalStorage; Set default wishlists to localstorage
+const wishlistList = localStorage.getItem('wishlists');
+if (wishlistList) {
+  console.log('Is');
+  console.log(JSON.parse(localStorage.getItem('wishlists')));
+
+  JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
+    document
+      .querySelector('.wishlist_tabs #tabs .create_tab')
+      .insertAdjacentHTML(
+        'beforebegin',
+        `<li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="${item.id}">
+    ${item.name}
+    </li>`
+      );
+
+    document
+      .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
+      .insertAdjacentHTML(
+        'beforebegin',
+        `<div class="tab_content" data-id="${item.id}">
+        ${item.id} Content
+      </div>`
+      );
+  });
+} else {
+  localStorage.setItem(
+    'wishlists',
+    JSON.stringify([{ name: 'Default List 2', id: 3, tabContentInfo: [] }])
+  );
+  console.log('added');
+  console.log(JSON.parse(localStorage.getItem('wishlists')));
+
+  JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
+    document
+      .querySelector('.wishlist_tabs #tabs .create_tab')
+      .insertAdjacentHTML(
+        'beforebegin',
+        `<li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="1">
+    ${item.name}
+    </li>`
+      );
+
+    document
+      .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
+      .insertAdjacentHTML(
+        'beforebegin',
+        `<div class="tab_content" data-id="${item.id}">
+        ${item.id} Content
+      </div>`
+      );
+  });
+}
+
 // Open popup with wishlist modal lists
 document
   .querySelectorAll('.cards .card__frame-heart')
