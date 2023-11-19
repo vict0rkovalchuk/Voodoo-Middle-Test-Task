@@ -62,7 +62,7 @@ document
     let newElement = [
       {
         name: e.target.querySelector('input.create_tab_content-input').value,
-        id: 6,
+        id: 'id' + Math.random().toString(16).slice(2),
         tabContentInfo: []
       }
     ];
