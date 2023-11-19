@@ -1,3 +1,28 @@
+// Open popup with wishlist modal lists
+document
+  .querySelectorAll('.cards .card__frame-heart')
+  .forEach((item, index) => {
+    item.addEventListener('click', () => {
+      if (
+        document
+          .querySelectorAll('.cards .card__frame-popup')
+          [index].classList.contains('hidden')
+      ) {
+        document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
+          item.classList.add('hidden');
+        });
+
+        document
+          .querySelectorAll('.cards .card__frame-popup')
+          [index].classList.remove('hidden');
+      } else {
+        document
+          .querySelectorAll('.cards .card__frame-popup')
+          [index].classList.add('hidden');
+      }
+    });
+  });
+
 // Open / Close wishlist modal
 function openWishlistModal() {
   const viewPortWidth = window.innerWidth;
@@ -58,9 +83,14 @@ function closeWishlistModal() {
   document.body.style.overflow = '';
 }
 
-document.querySelectorAll('.card__frame-heart').forEach(item => {
-  item.addEventListener('click', () => {
-    openWishlistModal();
+document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
+  item.addEventListener('click', e => {
+    if (e.target.nodeName == 'LI') {
+      document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
+        item.classList.add('hidden');
+      });
+      openWishlistModal();
+    }
   });
 });
 

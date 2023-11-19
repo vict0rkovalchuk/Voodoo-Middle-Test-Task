@@ -13,24 +13,24 @@
       <div>
         <!-- Tabs -->
         <ul id="tabs" class="flex gap-[30px] items-center flex-wrap">
-          <li class="text-black text-sm font-bold">
-            <a id="default-tab" href="#first">Default List</a>
+          <li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="1">
+            Default List
           </li>
-          <li class="text-black text-sm font-bold">
-            <a href="#second">My custom wishlist</a>
+          <li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="2">
+            My custom wishlist
           </li>
-          <li class="text-black text-sm font-bold">
-            <a href="#third">NewYear gifts</a>
+          <li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="3">
+            NewYear gifts
           </li>
-          <li class="bg-black rounded py-[9px] px-[15px] text-white text-sm font-bold">
-            <a href="#fourth">Create new list</a>
+          <li class="items_tab create_tab bg-black rounded py-[9px] px-[15px] text-white text-sm font-bold cursor-pointer" data-id="4">
+            Create new list
           </li>
         </ul>
 
         <!-- Tab Contents -->
         <div id="tab-contents" class="pt-[25px]">
-          <div id="first" class="">
-            <div class="cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+          <div class="tab_content" data-id="1">
+            <div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
               <div class="card">
                 <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
                   <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
@@ -279,13 +279,13 @@
               </div>
             </div>
           </div>
-          <div id="second" class="hidden">
+          <div class="tab_content hidden" data-id="2">
             Second tab
           </div>
-          <div id="third" class="hidden">
+          <div class="tab_content hidden" data-id="3">
             Third tab
           </div>
-          <div id="fourth" class="hidden">
+          <div class="tab_content hidden" data-id="4">
             Fourth tab
           </div>
         </div>
@@ -299,29 +299,20 @@
 </div>
 
 <script>
-    let tabsContainer = document.querySelector("#tabs");
-  
-    let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
-  
-    tabTogglers.forEach(function(toggler) {
-      toggler.addEventListener("click", function(e) {
-        e.preventDefault();
-  
-        let tabName = this.getAttribute("href");
-  
-        let tabContents = document.querySelector("#tab-contents");
-  
-        for (let i = 0; i < tabContents.children.length; i++) {
-          
-          tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px", "bg-white");  tabContents.children[i].classList.remove("hidden");
-          if ("#" + tabContents.children[i].id === tabName) {
-            continue;
-          }
-          tabContents.children[i].classList.add("hidden");
-          
+  document.querySelector('.wishlist_tabs #tabs').addEventListener('click', (e) => {
+    if(e.target.classList.contains('items_tab')) {
+      const tabIndex = e.target.dataset.id;
+      
+      const tabsContent = document.querySelectorAll('.wishlist_tabs #tab-contents .tab_content');
+      tabsContent.forEach(item => {
+        if(item.dataset.id == tabIndex) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
         }
-      });
-    });
+      })
+    }
+  })
 </script>
 
 {% schema %}

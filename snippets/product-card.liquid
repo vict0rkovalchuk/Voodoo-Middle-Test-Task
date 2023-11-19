@@ -1,5 +1,30 @@
 <div class="card">
   <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
+    <div class="card__frame-popup hidden bg-black absolute text-white top-[43px] right-[-9px] z-10 p-[15px] rounded shadow-[0_14px_26px_1px_rgba(0,0,0,0.25)]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="21"
+        viewBox="0 0 25 21"
+        fill="none"
+        class="absolute right-[20px] top-[-10px]">
+        <path d="M12.5 0L24.1913 20.25H0.808657L12.5 0Z" fill="black" />
+      </svg>
+
+      <div class="wishlist-lists">
+        <ul class="wishlist-lists-names text-white">
+          <li class="uppercase text-xs font-medium leading-normal cursor-pointer">to default list</li>
+          <li class="uppercase text-xs font-medium leading-normal cursor-pointer">to my custom list</li>
+          <li class="uppercase text-xs font-medium leading-normal cursor-pointer">to newyear gifts</li>
+        </ul>
+
+        <ul class="wishlist-lists-create pt-[28px] text-white">
+          <li class="uppercase text-xs font-medium leading-normal cursor-pointer">
+            create new list
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
       used
     </div>
