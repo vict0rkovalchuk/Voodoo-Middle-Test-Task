@@ -18,7 +18,7 @@ if (wishlistList) {
       .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
       .insertAdjacentHTML(
         'beforebegin',
-        `<div class="tab_content" data-id="${item.id}">
+        `<div class="tab_content hidden" data-id="${item.id}">
         ${item.id} Content
       </div>`
       );
@@ -45,12 +45,50 @@ if (wishlistList) {
       .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
       .insertAdjacentHTML(
         'beforebegin',
-        `<div class="tab_content" data-id="${item.id}">
+        `<div class="tab_content hidden" data-id="${item.id}">
         ${item.id} Content
       </div>`
       );
   });
 }
+
+// Set to Local Storage new wishlist
+document
+  .querySelector('.wishlist_tabs #tab-contents .create_tab_content form')
+  .addEventListener('submit', e => {
+    e.preventDefault();
+    console.log(e.target.querySelector('input.create_tab_content-input').value);
+    let oldLocalStorageState = JSON.parse(localStorage.getItem('wishlists'));
+    let newElement = [
+      {
+        name: e.target.querySelector('input.create_tab_content-input').value,
+        id: 6,
+        tabContentInfo: []
+      }
+    ];
+    let newLocalStorageState = [...oldLocalStorageState, ...newElement];
+    localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
+
+    newElement.forEach(item => {
+      document
+        .querySelector('.wishlist_tabs #tabs .create_tab')
+        .insertAdjacentHTML(
+          'beforebegin',
+          `<li class="items_tab text-[#767676] text-sm font-bold cursor-pointer" data-id="${item.id}">
+      ${item.name}
+      </li>`
+        );
+
+      document
+        .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
+        .insertAdjacentHTML(
+          'beforebegin',
+          `<div class="tab_content hidden" data-id="${item.id}">
+          ${item.id} Content
+        </div>`
+        );
+    });
+  });
 
 // Open popup with wishlist modal lists
 document
