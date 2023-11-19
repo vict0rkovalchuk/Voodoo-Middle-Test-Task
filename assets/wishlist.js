@@ -374,7 +374,7 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
             <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
               <div class="card__descr-info font-bold">
                 <a href="${productObjectInfo.productUrl}" class="card__descr-name">${productObjectInfo.productTitle}</a>
-                <div class="card__descr-price" data-price="100.00">${item.productPrice}</div>
+                <div class="card__descr-price" data-price="100.00">${productObjectInfo.productPrice}</div>
               </div>
               <div class="card__descr-text flex flex-col items-end">
                 <div class="card__descr-condition font-medium">Condition</div>
