@@ -950,6 +950,10 @@ video {
   border-width: 1px;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-b-\[1px\] {
   border-bottom-width: 1px;
 }
