@@ -34,9 +34,11 @@
         </div>
       </div>
     </div>
-    <div class="wishlist_divider h-[1px] bg-black mt-[40px]"></div>
+    <div class="wishlist_divider wishlist_divider-bottom h-[1px] bg-black mt-[40px]"></div>
     <button class="wishlist_button mt-[40px] rounded bg-black py-4 w-64 text-white text-center text-sm font-bold">
-      DELETE Default List
+      DELETE
+      <span class="tab_name-deletebtn">Default</span>
+      List
     </button>
   </div>
 </div>
@@ -45,6 +47,15 @@
   document.querySelector('.wishlist_tabs #tabs').addEventListener('click', (e) => {
     if(e.target.classList.contains('items_tab')) {
       const tabIndex = e.target.dataset.id;
+      if(tabIndex !== '0') {
+        document.querySelector('.wishlist_button').classList.remove('hidden');
+        document.querySelector('.wishlist_divider-bottom').classList.remove('hidden');
+        document.querySelector('.wishlist_button .tab_name-deletebtn').textContent = e.target.textContent;
+        document.querySelector('.wishlist_button').setAttribute('data-tab-id', tabIndex);
+      } else {
+        document.querySelector('.wishlist_button').classList.add('hidden');
+        document.querySelector('.wishlist_divider-bottom').classList.add('hidden');
+      }
       
       const tabsTriggers = document.querySelectorAll('.wishlist_tabs #tabs .items_tab-trigger');
       tabsTriggers.forEach(item => {

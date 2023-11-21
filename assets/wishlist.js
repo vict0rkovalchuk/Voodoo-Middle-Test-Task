@@ -138,6 +138,8 @@ if (wishlistList) {
     insertTabNameToTabTrigger(item);
     insertInitialContentToTabContent(item);
   });
+  // Update popups with actual wishlists name
+  updatePopupNames();
 }
 
 // Set to Local Storage new wishlist
@@ -292,6 +294,18 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
 
 // Open / Close wishlist modal
 function openWishlistModal() {
+  if (
+    !document.querySelector('.create_tab_content').classList.contains('hidden')
+  ) {
+    document.querySelector('.wishlist_button').classList.add('hidden');
+    document.querySelector('.wishlist_divider-bottom').classList.add('hidden');
+  } else {
+    document.querySelector('.wishlist_button').classList.remove('hidden');
+    document
+      .querySelector('.wishlist_divider-bottom')
+      .classList.remove('hidden');
+  }
+
   const viewPortWidth = window.innerWidth;
 
   document.body.style.overflow = 'hidden';
@@ -377,4 +391,24 @@ document.querySelector('.wishlist-overlay').addEventListener('click', () => {
 
 document.querySelector('.wishlist').addEventListener('click', e => {
   e.stopPropagation();
+});
+
+// Delete wishlist
+document.querySelector('#wishlist').addEventListener('click', e => {
+  if (e.target.closest('.wishlist_button')) {
+    const tabId = e.target.getAttribute('data-tab-id');
+    const oldLocalStorageState = JSON.parse(localStorage.getItem('wishlists'));
+    const newLocalStorageState = oldLocalStorageState.filter(
+      item => item.id != tabId
+    );
+    localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
+    updatePopupNames();
+    document.querySelector(`.items_tab[data-id="${tabId}"]`).remove();
+    // console.log(document.querySelector(`.items_tab[data-id="${tabId}"]`));
+    document.querySelector(`.tab_content[data-id="${tabId}"]`).remove();
+    // console.log(document.querySelector(`.tab_content[data-id="${tabId}"]`));
+    document
+      .querySelector(`.tab_content[data-id="0"]`)
+      .classList.remove('hidden');
+  }
 });
