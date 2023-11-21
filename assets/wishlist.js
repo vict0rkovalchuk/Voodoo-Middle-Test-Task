@@ -100,6 +100,9 @@ if (wishlistList) {
   console.log('Is');
   console.log(JSON.parse(localStorage.getItem('wishlists')));
 
+  // Update popups with actual wishlists name
+  updatePopupNames();
+
   JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
     insertTabNameToTabTrigger(item);
 
@@ -162,9 +165,6 @@ document
 
     updatePopupNames();
   });
-
-// Update popups with actual wishlists name
-updatePopupNames();
 
 // Open popup with wishlist modal lists
 document
@@ -349,6 +349,10 @@ function closeWishlistModal() {
   document.querySelector('.wishlist-overlay').style.opacity = '0';
   document.body.style.overflow = '';
 }
+
+document.querySelector('.signup_wishlist').addEventListener('click', () => {
+  openWishlistModal();
+});
 
 document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
   item.addEventListener('click', e => {

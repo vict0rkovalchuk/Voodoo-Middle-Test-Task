@@ -1,33 +1,31 @@
-<header
-      class="border-b-[1px] border-solid border-black p-6 md:py-12 md:pl-16 md:pr-28"
-    >
-      <div class="container mx-auto flex justify-between">
-        <div class="logo flex gap-1 md:gap-3">
-          <div class="logo__round w-[23px] md:w-auto">
-            <a href="{{ routes.root_url }}">
-              {% render 'icon-voodoo' %}
-            </a>
-          </div>
-          <div class="logo__text h-[50px] md:h-auto">
-            <a href="{{ routes.root_url }}">
-              {% render 'icon-voodoo-logo' %}
-            </a>
-          </div>
+<header class="border-b-[1px] border-solid border-black p-6 md:py-12 md:pl-16 md:pr-28">
+  <div class="container mx-auto flex justify-between">
+    <div class="logo flex gap-1 md:gap-3">
+      <div class="logo__round w-[23px] md:w-auto">
+        <a href="{{ routes.root_url }}">
+          {% render 'icon-voodoo' %}
+        </a>
+      </div>
+      <div class="logo__text h-[50px] md:h-auto">
+        <a href="{{ routes.root_url }}">
+          {% render 'icon-voodoo-logo' %}
+        </a>
+      </div>
+    </div>
+    <div class="signup">
+      <div class="signup__wrapper flex items-center gap-4 md:gap-12">
+        <div class="signup_wishlist cursor-pointer">
+          {% render 'icon-heart-transparent' %}
         </div>
-        <div class="signup">
-          <div class="signup__wrapper flex items-center gap-4 md:gap-12">
-            <div class="signup__cart cursor-pointer">
-              {% render 'icon-cart' %}
-            </div>
-            <div class="signup__btn">
-              <button
-                class="p-3 bg-black text-white rounded text-sm md:text-xl leading-[14px] md:leading-[20px]"
-              >
-                Sign-up
-              </button>
-            </div>
-          </div>
+        <div class="signup__cart cursor-pointer">
+          {% render 'icon-cart' %}
+        </div>
+        <div class="signup__btn">
+          <button class="p-3 bg-black text-white rounded text-sm md:text-xl leading-[14px] md:leading-[20px]">
+            Sign-up
+          </button>
         </div>
       </div>
-    </header>
-
+    </div>
+  </div>
+</header>
