@@ -1,24 +1,16 @@
 // Get wishlists from LocalStorage; Set default wishlists to localstorage
-const wishlistList = localStorage.getItem('wishlists');
-if (wishlistList) {
-  console.log('Is');
-  console.log(JSON.parse(localStorage.getItem('wishlists')));
-
-  JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
-    document
-      .querySelector('.wishlist_tabs #tabs .create_tab')
-      .insertAdjacentHTML(
-        'beforebegin',
-        `<li class="items_tab items_tab-trigger py-[9px] text-[#767676] text-sm font-bold cursor-pointer" data-id="${item.id}">
-    ${item.name}
-    </li>`
-      );
-
-    if (item.tabContentInfo.length > 0) {
-      console.log(item.tabContentInfo.length);
-      let productList = '';
-      item.tabContentInfo.forEach(item => {
-        productList += `<div class="card" data-product-id="${item.productId}">
+function returnCardHTML({
+  productId,
+  productImage,
+  productImageAlt,
+  productUrl,
+  productTitle,
+  productPrice,
+  productCondition,
+  addToCartVariantID
+}) {
+  return `
+  <div class="card" data-product-id="${productId}">
         <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
           <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
             used
@@ -38,17 +30,17 @@ if (wishlistList) {
     </div>
           <img
             class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
-            src="${item.productImage}"
-            alt="${item.productImageAlt}">
+            src="${productImage}"
+            alt="${productImageAlt}">
         </div>
         <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
           <div class="card__descr-info font-bold">
-            <a href="${item.productUrl}" class="card__descr-name">${item.productTitle}</a>
-            <div class="card__descr-price" data-price="100.00">${item.productPrice}</div>
+            <a href="${productUrl}" class="card__descr-name">${productTitle}</a>
+            <div class="card__descr-price" data-price="100.00">${productPrice}</div>
           </div>
           <div class="card__descr-text flex flex-col items-end">
             <div class="card__descr-condition font-medium">Condition</div>
-            <div class="card__descr-fact font-normal">${item.productCondition}</div>
+            <div class="card__descr-fact font-normal">${productCondition}</div>
           </div>
         </div>
         <div class="card__btn mt-3">
@@ -56,7 +48,7 @@ if (wishlistList) {
             <input
               type="hidden"
               name="id"
-              value="${item.addToCartVariantID}">
+              value="${addToCartVariantID}">
             <input
               min="1"
               type="hidden"
@@ -68,7 +60,54 @@ if (wishlistList) {
             </button>
           </form>
         </div>
-      </div>`;
+      </div>
+  `;
+}
+
+function insertTabNameToTabTrigger({ id, name }) {
+  document.querySelector('.wishlist_tabs #tabs .create_tab').insertAdjacentHTML(
+    'beforebegin',
+    `<li class="items_tab items_tab-trigger py-[9px] text-[#767676] text-sm font-bold cursor-pointer" data-id="${id}">
+  ${name}
+  </li>`
+  );
+}
+
+function insertInitialContentToTabContent({ id, name }) {
+  document
+    .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
+    .insertAdjacentHTML(
+      'beforebegin',
+      `<div class="tab_content hidden" data-id="${id}">
+        No items in <span style="color: green; font-style: italic;" class="font-bold">${name}</span> wishlist yet
+      </div>`
+    );
+}
+
+function updatePopupNames() {
+  document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
+    item.querySelector('.wishlist-lists-names').innerHTML = '';
+
+    JSON.parse(localStorage.getItem('wishlists')).forEach(elem => {
+      item.querySelector('.wishlist-lists-names').innerHTML += `
+        <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">${elem.name}</li>`;
+    });
+  });
+}
+
+const wishlistList = localStorage.getItem('wishlists');
+if (wishlistList) {
+  console.log('Is');
+  console.log(JSON.parse(localStorage.getItem('wishlists')));
+
+  JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
+    insertTabNameToTabTrigger(item);
+
+    if (item.tabContentInfo.length > 0) {
+      console.log(item.tabContentInfo.length);
+      let productList = '';
+      item.tabContentInfo.forEach(item => {
+        productList += returnCardHTML(item);
       });
       document
         .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
@@ -81,14 +120,7 @@ if (wishlistList) {
       </div>`
         );
     } else {
-      document
-        .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
-        .insertAdjacentHTML(
-          'beforebegin',
-          `<div class="tab_content hidden" data-id="${item.id}">
-        ${item.id} Content
-      </div>`
-        );
+      insertInitialContentToTabContent(item);
     }
   });
 } else {
@@ -100,23 +132,8 @@ if (wishlistList) {
   console.log(JSON.parse(localStorage.getItem('wishlists')));
 
   JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
-    document
-      .querySelector('.wishlist_tabs #tabs .create_tab')
-      .insertAdjacentHTML(
-        'beforebegin',
-        `<li class="items_tab items_tab-trigger py-[9px] text-[#767676] text-sm font-bold cursor-pointer" data-id="${item.id}">
-    ${item.name}
-    </li>`
-      );
-
-    document
-      .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
-      .insertAdjacentHTML(
-        'beforebegin',
-        `<div class="tab_content hidden" data-id="${item.id}">
-        ${item.id} Content
-      </div>`
-      );
+    insertTabNameToTabTrigger(item);
+    insertInitialContentToTabContent(item);
   });
 }
 
@@ -139,44 +156,15 @@ document
     localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
 
     newElement.forEach(item => {
-      document
-        .querySelector('.wishlist_tabs #tabs .create_tab')
-        .insertAdjacentHTML(
-          'beforebegin',
-          `<li class="items_tab items_tab-trigger py-[9px] text-[#767676] text-sm font-bold cursor-pointer" data-id="${item.id}">
-      ${item.name}
-      </li>`
-        );
-
-      document
-        .querySelector('.wishlist_tabs #tab-contents .create_tab_content')
-        .insertAdjacentHTML(
-          'beforebegin',
-          `<div class="tab_content hidden" data-id="${item.id}">
-          ${item.id} Content
-        </div>`
-        );
+      insertTabNameToTabTrigger(item);
+      insertInitialContentToTabContent(item);
     });
 
-    document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
-      item.querySelector('.wishlist-lists-names').innerHTML = '';
-
-      JSON.parse(localStorage.getItem('wishlists')).forEach(elem => {
-        item.querySelector('.wishlist-lists-names').innerHTML += `
-        <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">${elem.name}</li>`;
-      });
-    });
+    updatePopupNames();
   });
 
 // Update popups with actual wishlists name
-document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
-  item.querySelector('.wishlist-lists-names').innerHTML = '';
-
-  JSON.parse(localStorage.getItem('wishlists')).forEach(elem => {
-    item.querySelector('.wishlist-lists-names').innerHTML += `
-    <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">${elem.name}</li>`;
-  });
-});
+updatePopupNames();
 
 // Open popup with wishlist modal lists
 document
@@ -234,9 +222,8 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
         }
       });
 
-      // Add to Local Storage and to the wishlist
+      // Add to Local Storage and render to the wishlist
       const productCard = e.target.closest('.card');
-      let productObjectInfo = {};
 
       const productId = productCard.getAttribute('data-product-id');
       const productImage = productCard.querySelector('img').getAttribute('src');
@@ -257,7 +244,7 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
         .querySelector('.card__descr-info a')
         .getAttribute('href');
 
-      productObjectInfo = {
+      let productObjectInfo = {
         productId,
         productImage,
         productImageAlt,
@@ -290,127 +277,14 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
         ) {
           document.querySelector(
             `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"] .wishlist__cards`
-          ).innerHTML += `
-              <div class="card" data-product-id="${productObjectInfo.productId}">
-            <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
-              <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
-                used
-              </div>
-              <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
-              <svg
-              width="22"
-              height="20"
-              viewBox="0 0 22 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                id="Vector"
-                d="M19.9243 10.7319L19.9373 10.7459L10.7453 19.9379L1.55333 10.7459L1.56633 10.7319C0.498895 9.48744 -0.0588283 7.88557 0.00491939 6.24727C0.0686671 4.60898 0.749176 3.05529 1.91008 1.89755C3.07099 0.739802 4.62653 0.0635331 6.26499 0.00425378C7.90345 -0.0550255 9.50379 0.507064 10.7453 1.57789C11.9869 0.507064 13.5872 -0.0550255 15.2257 0.00425378C16.8641 0.0635331 18.4197 0.739802 19.5806 1.89755C20.7415 3.05529 21.422 4.60898 21.4857 6.24727C21.5495 7.88557 20.9918 9.48744 19.9243 10.7319Z"
-                fill="#2D3436" />
-            </svg>
-        </div>
-              <img
-                class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
-                src="${productObjectInfo.productImage}"
-                alt="${productObjectInfo.productImageAlt}">
-            </div>
-            <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
-              <div class="card__descr-info font-bold">
-                <a href="${productObjectInfo.productUrl}" class="card__descr-name">${productObjectInfo.productTitle}</a>
-                <div class="card__descr-price" data-price="100.00">${item.productPrice}</div>
-              </div>
-              <div class="card__descr-text flex flex-col items-end">
-                <div class="card__descr-condition font-medium">Condition</div>
-                <div class="card__descr-fact font-normal">${productObjectInfo.productCondition}</div>
-              </div>
-            </div>
-            <div class="card__btn mt-3">
-              <form method="post" action="/cart/add">
-                <input
-                  type="hidden"
-                  name="id"
-                  value="${productObjectInfo.addToCartVariantID}">
-                <input
-                  min="1"
-                  type="hidden"
-                  id="quantity"
-                  name="quantity"
-                  value="1">
-                <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
-                  Add to cart
-                </button>
-              </form>
-            </div>
-          </div>
-              `;
+          ).innerHTML += returnCardHTML(productObjectInfo);
         } else {
           document.querySelector(
             `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"]`
-          ).innerHTML = `
-          <div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
-              <div class="card" data-product-id="${productObjectInfo.productId}">
-            <div class="card__frame p-3 rounded border-[1px] border-solid border-black h-[300px] relative flex justify-center">
-              <div class="card__frame-badge inline p-2 rounded bg-black text-[#FCF7E6] text-xs font-normal uppercase absolute -left-[-12px] z-10 leading-3">
-                used
-              </div>
-              <div class="card__frame-heart text-[#FCF7E6] absolute right-[12px] z-10 cursor-pointer">
-              <svg
-              width="22"
-              height="20"
-              viewBox="0 0 22 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                id="Vector"
-                d="M19.9243 10.7319L19.9373 10.7459L10.7453 19.9379L1.55333 10.7459L1.56633 10.7319C0.498895 9.48744 -0.0588283 7.88557 0.00491939 6.24727C0.0686671 4.60898 0.749176 3.05529 1.91008 1.89755C3.07099 0.739802 4.62653 0.0635331 6.26499 0.00425378C7.90345 -0.0550255 9.50379 0.507064 10.7453 1.57789C11.9869 0.507064 13.5872 -0.0550255 15.2257 0.00425378C16.8641 0.0635331 18.4197 0.739802 19.5806 1.89755C20.7415 3.05529 21.422 4.60898 21.4857 6.24727C21.5495 7.88557 20.9918 9.48744 19.9243 10.7319Z"
-                fill="#2D3436" />
-            </svg>
-        </div>
-              <img
-                class="h-full object-cover rounded hover:scale-105 transition-all duration-[0.35s] cursor-pointer"
-                src="${productObjectInfo.productImage}"
-                alt="${productObjectInfo.productImageAlt}">
-            </div>
-            <div class="card__descr mt-3 flex justify-between text-sm leading-normal">
-              <div class="card__descr-info font-bold">
-                <a href="${productObjectInfo.productUrl}" class="card__descr-name">${productObjectInfo.productTitle}</a>
-                <div class="card__descr-price" data-price="100.00">${productObjectInfo.productPrice}</div>
-              </div>
-              <div class="card__descr-text flex flex-col items-end">
-                <div class="card__descr-condition font-medium">Condition</div>
-                <div class="card__descr-fact font-normal">${productObjectInfo.productCondition}</div>
-              </div>
-            </div>
-            <div class="card__btn mt-3">
-              <form method="post" action="/cart/add">
-                <input
-                  type="hidden"
-                  name="id"
-                  value="${productObjectInfo.addToCartVariantID}">
-                <input
-                  min="1"
-                  type="hidden"
-                  id="quantity"
-                  name="quantity"
-                  value="1">
-                <button type="submit" class="card__button p-4 rounded bg-black text-white text-sm font-bold leading-normal w-full hover:scale-105 transition-all duration-[0.35s]">
-                  Add to cart
-                </button>
-              </form>
-            </div>
-          </div>
-          </div>
-              `;
+          ).innerHTML = `<div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+            ${returnCardHTML(productObjectInfo)}
+          </div>`;
         }
-        //     if(document.querySelector(
-        //       `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"]`
-        //     ).innerHTML ) {
-
-        //     } else {
-
-        //     }
-      } else {
-        console.log('false');
       }
     }
   });
