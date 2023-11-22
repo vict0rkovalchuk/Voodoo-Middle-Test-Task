@@ -339,6 +339,9 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
 
       if (tabID != '0') {
         updateCardHeart();
+        document
+          .querySelector('.wishlist_button')
+          .setAttribute('data-tab-id', tabID);
         if (
           document.querySelector(
             `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"] .wishlist__cards`
@@ -463,7 +466,9 @@ document.querySelector('.wishlist').addEventListener('click', e => {
 // Delete wishlist
 document.querySelector('#wishlist').addEventListener('click', e => {
   if (e.target.closest('.wishlist_button')) {
-    const tabId = e.target.getAttribute('data-tab-id');
+    const tabId = e.target
+      .closest('.wishlist_button')
+      .getAttribute('data-tab-id');
     const oldLocalStorageState = JSON.parse(localStorage.getItem('wishlists'));
     const newLocalStorageState = oldLocalStorageState.filter(
       item => item.id != tabId
@@ -475,5 +480,6 @@ document.querySelector('#wishlist').addEventListener('click', e => {
     document
       .querySelector(`.tab_content[data-id="0"]`)
       .classList.remove('hidden');
+    // updateCardHeart();
   }
 });
