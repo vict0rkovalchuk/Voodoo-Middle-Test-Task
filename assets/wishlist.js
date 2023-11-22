@@ -154,8 +154,6 @@ function updateCardHeart() {
     tabContentInfo.forEach(elem => arr.push(elem.productId));
   });
 
-  console.log(arr);
-
   const cardsDisplayed = document.querySelectorAll('main .card');
 
   cardsDisplayed.forEach(card => {
@@ -523,5 +521,52 @@ document.querySelector('#wishlist').addEventListener('click', e => {
     document
       .querySelector(`.tab_content[data-id="0"]`)
       .classList.remove('hidden');
+  }
+});
+
+// Delete item from wishlist
+document.querySelector('#tab-contents').addEventListener('click', e => {
+  if (e.target.closest('.card__frame-heart')) {
+    const tabContentIndex = e.target.closest('.tab_content').dataset.id;
+    const closestCardToDelete = e.target.closest('.card');
+    const tabTriggerContent = document.querySelector(
+      `.items_tab-trigger[data-id="${tabContentIndex}"]`
+    ).textContent;
+    const cardIdToDelete = e.target
+      .closest('.card')
+      .getAttribute('data-product-id');
+
+    closestCardToDelete.remove();
+
+    const oldLocalStorageState = JSON.parse(localStorage.getItem('wishlists'));
+
+    const newLocalStorageState = oldLocalStorageState.map(item => {
+      if (item.id == tabContentIndex) {
+        const newTabContentInfo = item.tabContentInfo.filter(
+          item => item.productId != cardIdToDelete
+        );
+        return {
+          ...item,
+          tabContentInfo: [...newTabContentInfo]
+        };
+      }
+      return item;
+    });
+
+    localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
+
+    if (
+      !document.querySelectorAll(
+        `.tab_content[data-id="${tabContentIndex}"] .wishlist__cards .card`
+      ).length
+    ) {
+      document.querySelector(
+        `.tab_content[data-id="${tabContentIndex}"]`
+      ).innerHTML = `
+      No items in <span style="color: green; font-style: italic;" class="font-bold">${tabTriggerContent}</span> wishlist yet
+      `;
+    }
+
+    updateCardHeart();
   }
 });
