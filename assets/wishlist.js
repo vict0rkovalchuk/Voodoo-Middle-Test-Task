@@ -64,6 +64,14 @@ function returnCardHTML({
   `;
 }
 
+function returnCardsHTML(HTMLText) {
+  return `
+  <div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+    ${HTMLText}
+  </div>
+  `;
+}
+
 function insertTabNameToTabTrigger({ id, name }) {
   document.querySelector('.wishlist_tabs #tabs .create_tab').insertAdjacentHTML(
     'beforebegin',
@@ -97,9 +105,6 @@ function updatePopupNames() {
 
 const wishlistList = localStorage.getItem('wishlists');
 if (wishlistList) {
-  console.log('Is');
-  console.log(JSON.parse(localStorage.getItem('wishlists')));
-
   // Update popups with actual wishlists name
   updatePopupNames();
 
@@ -107,7 +112,6 @@ if (wishlistList) {
     insertTabNameToTabTrigger(item);
 
     if (item.tabContentInfo.length > 0) {
-      console.log(item.tabContentInfo.length);
       let productList = '';
       item.tabContentInfo.forEach(item => {
         productList += returnCardHTML(item);
@@ -117,9 +121,7 @@ if (wishlistList) {
         .insertAdjacentHTML(
           'beforebegin',
           `<div class="tab_content hidden" data-id="${item.id}">
-          <div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
-            ${productList}
-          </div>
+          ${returnCardsHTML(productList)}
       </div>`
         );
     } else {
@@ -131,8 +133,6 @@ if (wishlistList) {
     'wishlists',
     JSON.stringify([{ name: 'Default List', id: 1, tabContentInfo: [] }])
   );
-  console.log('added');
-  console.log(JSON.parse(localStorage.getItem('wishlists')));
 
   JSON.parse(localStorage.getItem('wishlists')).forEach(item => {
     insertTabNameToTabTrigger(item);
@@ -142,12 +142,48 @@ if (wishlistList) {
   updatePopupNames();
 }
 
+function updateCardHeart() {
+  const localStorageWishlistsInfo = JSON.parse(
+    localStorage.getItem('wishlists')
+  );
+
+  let arr = [];
+
+  localStorageWishlistsInfo.forEach(item => {
+    const tabContentInfo = item.tabContentInfo;
+    tabContentInfo.forEach(elem => arr.push(elem.productId));
+  });
+
+  const cardsDisplayed = document.querySelectorAll('main .card');
+
+  cardsDisplayed.forEach(card => {
+    const cardHeart = card.querySelector('.card__frame-heart');
+    if (arr.includes(cardHeart.dataset.id)) {
+      cardHeart.innerHTML = `
+    <svg
+    id="remove-card"
+    width="22"
+    height="20"
+    viewBox="0 0 22 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path
+      id="Vector"
+      d="M19.9243 10.7319L19.9373 10.7459L10.7453 19.9379L1.55333 10.7459L1.56633 10.7319C0.498895 9.48744 -0.0588283 7.88557 0.00491939 6.24727C0.0686671 4.60898 0.749176 3.05529 1.91008 1.89755C3.07099 0.739802 4.62653 0.0635331 6.26499 0.00425378C7.90345 -0.0550255 9.50379 0.507064 10.7453 1.57789C11.9869 0.507064 13.5872 -0.0550255 15.2257 0.00425378C16.8641 0.0635331 18.4197 0.739802 19.5806 1.89755C20.7415 3.05529 21.422 4.60898 21.4857 6.24727C21.5495 7.88557 20.9918 9.48744 19.9243 10.7319Z"
+      fill="#2D3436" />
+    </svg>
+    `;
+    }
+  });
+}
+
+updateCardHeart();
+
 // Set to Local Storage new wishlist
 document
   .querySelector('.wishlist_tabs #tab-contents .create_tab_content form')
   .addEventListener('submit', e => {
     e.preventDefault();
-    console.log(e.target.querySelector('input.create_tab_content-input').value);
     let oldLocalStorageState = JSON.parse(localStorage.getItem('wishlists'));
     let newElement = [
       {
@@ -187,9 +223,9 @@ document
         containerForQueueElement.classList.remove('hidden');
 
         containerForQueueElement.innerHTML = `
-          <div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
-            ${returnCardHTML(JSON.parse(localStorage.getItem('queueItem')))}
-          </div>
+          ${returnCardsHTML(
+            returnCardHTML(JSON.parse(localStorage.getItem('queueItem')))
+          )}
           `;
 
         localStorage.removeItem('queueItem');
@@ -289,7 +325,6 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
       };
 
       let oldLocalStorageState = JSON.parse(localStorage.getItem('wishlists'));
-      console.log('Old', oldLocalStorageState);
 
       let newLocalStorageState = oldLocalStorageState.map(item => {
         if (item.id == tabID) {
@@ -303,7 +338,7 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
       localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
 
       if (tabID != '0') {
-        console.log('Exist');
+        updateCardHeart();
         if (
           document.querySelector(
             `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"] .wishlist__cards`
@@ -315,9 +350,7 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
         } else {
           document.querySelector(
             `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"]`
-          ).innerHTML = `<div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
-            ${returnCardHTML(productObjectInfo)}
-          </div>`;
+          ).innerHTML = `${returnCardsHTML(returnCardHTML(productObjectInfo))}`;
         }
       } else {
         localStorage.setItem('queueItem', JSON.stringify(productObjectInfo));
@@ -438,9 +471,7 @@ document.querySelector('#wishlist').addEventListener('click', e => {
     localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
     updatePopupNames();
     document.querySelector(`.items_tab[data-id="${tabId}"]`).remove();
-    // console.log(document.querySelector(`.items_tab[data-id="${tabId}"]`));
     document.querySelector(`.tab_content[data-id="${tabId}"]`).remove();
-    // console.log(document.querySelector(`.tab_content[data-id="${tabId}"]`));
     document
       .querySelector(`.tab_content[data-id="0"]`)
       .classList.remove('hidden');
