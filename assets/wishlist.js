@@ -163,6 +163,37 @@ document
     newElement.forEach(item => {
       insertTabNameToTabTrigger(item);
       insertInitialContentToTabContent(item);
+
+      if (localStorage.getItem('queueItem')) {
+        const tabsContent = document.querySelectorAll(
+          '.wishlist_tabs #tab-contents .tab_content'
+        );
+        tabsContent.forEach(item => item.classList.add('hidden'));
+
+        const lastTabtrigger = document.querySelectorAll(
+          '.wishlist_tabs #tabs .items_tab-trigger'
+        )[
+          document.querySelectorAll('.wishlist_tabs #tabs .items_tab-trigger')
+            .length - 1
+        ];
+
+        lastTabtrigger.style.borderBottom = '2px solid black';
+        lastTabtrigger.style.color = 'black';
+
+        let containerForQueueElement =
+          document.querySelectorAll('.tab_content')[
+            document.querySelectorAll('.tab_content').length - 2
+          ];
+        containerForQueueElement.classList.remove('hidden');
+
+        containerForQueueElement.innerHTML = `
+          <div class="wishlist__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+            ${returnCardHTML(JSON.parse(localStorage.getItem('queueItem')))}
+          </div>
+          `;
+
+        localStorage.removeItem('queueItem');
+      }
     });
 
     updatePopupNames();
@@ -272,6 +303,7 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
       localStorage.setItem('wishlists', JSON.stringify(newLocalStorageState));
 
       if (tabID != '0') {
+        console.log('Exist');
         if (
           document.querySelector(
             `.wishlist_tabs #tab-contents .tab_content[data-id="${tabID}"] .wishlist__cards`
@@ -287,6 +319,8 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
             ${returnCardHTML(productObjectInfo)}
           </div>`;
         }
+      } else {
+        localStorage.setItem('queueItem', JSON.stringify(productObjectInfo));
       }
     }
   });
