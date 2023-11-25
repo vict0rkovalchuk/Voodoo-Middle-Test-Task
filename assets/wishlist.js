@@ -75,7 +75,7 @@ function returnCardsHTML(HTMLText) {
 function insertTabNameToTabTrigger({ id, name }) {
   document.querySelector('.wishlist_tabs #tabs .create_tab').insertAdjacentHTML(
     'beforebegin',
-    `<li class="items_tab items_tab-trigger py-[9px] text-[#767676] text-sm font-bold cursor-pointer" data-id="${id}">
+    `<li class="items_tab items_tab-trigger py-[9px] text-sm font-bold cursor-pointer" data-id="${id}" style="color: #767676">
   ${name}
   </li>`
   );
@@ -93,12 +93,26 @@ function insertInitialContentToTabContent({ id, name }) {
 }
 
 function updatePopupNames() {
+  const numberOfWishlistsItems = JSON.parse(
+    localStorage.getItem('wishlists')
+  ).length;
+
   document.querySelectorAll('.cards .card__frame-popup').forEach(item => {
+    if (numberOfWishlistsItems > 0) {
+      document.querySelectorAll('.wishlist-lists-create').forEach(item => {
+        item.style.paddingTop = '28px';
+      });
+    } else {
+      document.querySelectorAll('.wishlist-lists-create').forEach(item => {
+        item.style.paddingTop = '0';
+      });
+    }
+
     item.querySelector('.wishlist-lists-names').innerHTML = '';
 
     JSON.parse(localStorage.getItem('wishlists')).forEach(elem => {
       item.querySelector('.wishlist-lists-names').innerHTML += `
-        <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">${elem.name}</li>`;
+            <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">${elem.name}</li>`;
     });
   });
 }
@@ -521,6 +535,8 @@ document.querySelector('#wishlist').addEventListener('click', e => {
     document
       .querySelector(`.tab_content[data-id="0"]`)
       .classList.remove('hidden');
+    document.querySelector('.wishlist_button').classList.add('hidden');
+    document.querySelector('.wishlist_divider-bottom').classList.add('hidden');
   }
 });
 
