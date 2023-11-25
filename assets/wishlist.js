@@ -112,9 +112,14 @@ function updatePopupNames() {
 
     JSON.parse(localStorage.getItem('wishlists')).forEach(elem => {
       item.querySelector('.wishlist-lists-names').innerHTML += `
-            <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">${elem.name}</li>`;
+            <li class="uppercase text-xs font-medium leading-normal cursor-pointer" data-id="${elem.id}">to ${elem.name}</li>`;
     });
   });
+}
+
+function activeTabStyling(item) {
+  item.style.borderBottom = '2px solid black';
+  item.style.color = 'black';
 }
 
 const wishlistList = localStorage.getItem('wishlists');
@@ -256,13 +261,11 @@ document
             .length - 1
         ];
 
-        lastTabtrigger.style.borderBottom = '2px solid black';
-        lastTabtrigger.style.color = 'black';
+        activeTabStyling(lastTabtrigger);
 
+        const tabContentItems = document.querySelectorAll('.tab_content');
         let containerForQueueElement =
-          document.querySelectorAll('.tab_content')[
-            document.querySelectorAll('.tab_content').length - 2
-          ];
+          tabContentItems[tabContentItems.length - 2];
         containerForQueueElement.classList.remove('hidden');
 
         document.querySelector('.wishlist_button').classList.remove('hidden');
@@ -326,8 +329,7 @@ document.querySelectorAll('.wishlist-lists').forEach(item => {
       );
       tabsTriggers.forEach(item => {
         if (item.dataset.id == tabID) {
-          item.style.borderBottom = '2px solid black';
-          item.style.color = 'black';
+          activeTabStyling(item);
         } else {
           item.style.borderBottom = 'none';
           item.style.color = '#767676';

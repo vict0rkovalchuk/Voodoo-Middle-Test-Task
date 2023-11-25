@@ -1,117 +1,110 @@
-
 <div class="sidenav-overlay transition-opacity z-20 bg-black opacity-0 bg-opacity-50 w-full h-full fixed top-0 left-[-100%]">
-  <div 
-id="sideCart"
-class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden duration-[0.7s] text-[#FCF7E6] px-10 pt-12 w-full sm:w-[445px] md:w-6/12 lg:w-[445px]"
->
+  <div id="sideCart" class="sidenav h-full fixed z-20 top-0 right-[-100%] bg-[#111] overflow-x-hidden duration-[0.7s] text-[#FCF7E6] px-10 pt-12 w-full sm:w-[445px] md:w-6/12 lg:w-[445px]">
 
-  <div
-    class="sidenav__header pb-[22px] flex justify-between items-center border-b-[1px] border-solid border-[#FCF7E6]"
-  >
-    <div class="sidenav__header-title text-2xl font-bold">
-      Shopping Cart
+    <div class="sidenav__header pb-[22px] flex justify-between items-center border-b-[1px] border-solid border-[#FCF7E6]">
+      <div class="sidenav__header-title text-2xl font-bold">
+        Shopping Cart
+      </div>
+      <div class="sidenav__header-close text-3xl">
+        <a href="javascript:void(0)" class="closebtn text-[#FCF7E6]">&times;</a>
+      </div>
     </div>
-    <div class="sidenav__header-close text-3xl">
-      <a
-        href="javascript:void(0)"
-        class="closebtn text-[#FCF7E6]"
-        >&times;</a
-      >
+    <div class="sidenav-header-loader mt-6 flex justify-center">
+      {% render 'icon-cart-header-loader' %}
     </div>
-  </div>
-  <div class="sidenav-header-loader mt-6 flex justify-center">
-    {% render 'icon-cart-header-loader' %}
-  </div>
-  {% form 'cart', cart, class: 'cart-drawer-form' %}
-    {% if cart.item_count > 0 %}
-      <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">
-        {% for item in cart.items %}
-          <div class="sidenav__item flex justify-between h-[74px]" data-index="{{ forloop.index }}" data-line-item-key="{{ item.key }}">
-            <div class="sidenav__item-info flex gap-[18px]">
-              <div class="sidenav__item-img w-[74px] rounded border-[1px] border-solid border-white border-opacity-50 flex justify-center">
-                <a href="{{ item.url }}">
-                  {% if item.image %}
-                    <img src="{{ item.image |  img_url: 'small' }}" alt="{{ item.title | escape }}" class="h-full object-cover rounded">
-                  {% else %}
-                    {{ 'product-1' |  placeholder_svg_tag: 'h-full object-cover rounded' }}
-                  {% endif %}
-                </a>
-              </div>
-              <div class="sidenav__item-info-wrapper flex flex-col justify-between text-sm font-bold">
-                <div class="sidenav__item-title">
+    {% form 'cart'
+      , cart
+      , class: 'cart-drawer-form' %}
+      {% if cart.item_count > 0 %}
+        <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">
+          {% for item in cart.items %}
+            <div
+              class="sidenav__item flex justify-between h-[74px]"
+              data-index="{{ forloop.index }}"
+              data-line-item-key="{{ item.key }}">
+              <div class="sidenav__item-info flex gap-[18px]">
+                <div class="sidenav__item-img w-[74px] rounded border-[1px] border-solid border-white border-opacity-50 flex justify-center">
                   <a href="{{ item.url }}">
-                    {{ item.product.title | truncatewords: 4 }}
+                    {% if item.image %}
+                      <img
+                        src="{{ item.image | img_url: 'small' }}"
+                        alt="{{ item.title | escape }}"
+                        class="h-full object-cover rounded">
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'h-full object-cover rounded' }}
+                    {% endif %}
                   </a>
                 </div>
-                <div class="sidenav__item-price">{{ item.line_price | money }}</div>
-                <div class="sidenav__item-counter h-[20px] flex">
-                  <button type="submit" name="update"
-                  {% if item.quantity == 1 %}
-                    class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center cursor-not-allowed opacity-30"
-                  {% else %}
-                    class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center"
-                  {% endif %}
-                  {% if item.quantity == 1 %}
-                    disabled
-                  {% endif %}
-                  >
-                    -
-                  </button>
-                  <input 
-                    class="sidenav__item-number h-[20px] w-[20px] block bg-[#111] text-center pointer-events-none cursor-not-allowed" 
-                    type="number" 
-                    name="updates[]" 
-                    value="{{ item.quantity }}"
-                    id="updates_{{ forloop.index }}"
-                  >
-                  <button type="submit" name="update" class="sidenav__item-counter-plus h-[20px] w-[20px] flex justify-center items-center">
-                    +
-                  </button>
+                <div class="sidenav__item-info-wrapper flex flex-col justify-between text-sm font-bold">
+                  <div class="sidenav__item-title">
+                    <a href="{{ item.url }}">
+                      {{ item.product.title | truncatewords: 4 }}
+                    </a>
+                  </div>
+                  <div class="sidenav__item-price">{{ item.line_price | money }}</div>
+                  <div class="sidenav__item-counter h-[20px] flex">
+                    <button
+                      type="submit"
+                      name="update"
+                      {% if item.quantity == 1 %}
+                      class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center cursor-not-allowed opacity-30"
+                      {% else %}
+                      class="sidenav__item-counter-minus h-[20px] w-[20px] flex justify-center items-center"
+                      {% endif %}
+                      {% if item.quantity == 1 %}
+                      disabled
+                      {% endif %}>
+                      -
+                    </button>
+                    <input
+                      class="sidenav__item-number h-[20px] w-[20px] block bg-[#111] text-center pointer-events-none cursor-not-allowed"
+                      type="number"
+                      name="updates[]"
+                      value="{{ item.quantity }}"
+                      id="updates_{{ forloop.index }}">
+                    <button
+                      type="submit"
+                      name="update"
+                      class="sidenav__item-counter-plus h-[20px] w-[20px] flex justify-center items-center">
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col justify-between items-center">
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="sidenav__item-delete cursor-pointer">
+                  {% render 'icon-delete' %}
+                </a>
+                <div class="sidenav-loader">
+                  {% render 'icon-cart-item-loader' %}
                 </div>
               </div>
             </div>
-            <div class="flex flex-col justify-between items-center">
-              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="sidenav__item-delete cursor-pointer">
-                {% render 'icon-delete' %}
-              </a>
-              <div class="sidenav-loader">
-                {% render 'icon-cart-item-loader' %}
-              </div>
-            </div>
+          {% endfor %}
+        </div>
+
+        <div class="sidenav__footer pt-[35px] pb-[35px] flex justify-between items-center border-t-[1px] border-solid border-[#FCF7E6]">
+          <div class="sidenav__footer-total text-sm font-bold uppercase">
+            total
           </div>
-        {% endfor %}
-      </div>
+          <div class="sidenav__footer-price text-right text-sm font-bold uppercase">
+            {{ cart.total_price | money }}
+          </div>
+        </div>
+      {% else %}
+        <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">Your cart is empty</div>
 
-      <div
-        class="sidenav__footer pt-[35px] pb-[35px] flex justify-between items-center border-t-[1px] border-solid border-[#FCF7E6]"
-      >
-        <div class="sidenav__footer-total text-sm font-bold uppercase">
-          total
+        <div class="sidenav__footer pt-[35px] pb-[35px] flex justify-between items-center border-t-[1px] border-solid border-[#FCF7E6]">
+          <div class="sidenav__footer-total text-sm font-bold uppercase">
+            total
+          </div>
+          <div class="sidenav__footer-price text-right text-sm font-bold uppercase">
+            {{ cart.total_price | money }}
+          </div>
         </div>
-        <div
-          class="sidenav__footer-price text-right text-sm font-bold uppercase"
-        >
-          {{ cart.total_price | money }}
-        </div>
-      </div>
-    {% else %}
-      <div class="sidenav__items pt-[53px] pb-8 flex flex-col gap-10">Your cart is empty</div>
-
-      <div
-        class="sidenav__footer pt-[35px] pb-[35px] flex justify-between items-center border-t-[1px] border-solid border-[#FCF7E6]"
-      >
-        <div class="sidenav__footer-total text-sm font-bold uppercase">
-          total
-        </div>
-        <div
-          class="sidenav__footer-price text-right text-sm font-bold uppercase"
-        >
-          {{ cart.total_price | money }}
-        </div>
-      </div>
-    {% endif %}
-  {% endform %}
-</div>
+      {% endif %}
+    {% endform %}
+  </div>
 </div>
 
 {% schema %}

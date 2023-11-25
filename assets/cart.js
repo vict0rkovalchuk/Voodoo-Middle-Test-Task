@@ -118,29 +118,6 @@ function addCartDrawerListeners() {
 
 addCartDrawerListeners();
 
-// document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
-//   form.addEventListener('submit', async e => {
-//     e.preventDefault();
-
-//     // Open cart drawer
-//     openCartDrawer();
-
-//     // Activate loader
-//     document.querySelector('.cart-header-loader').classList.remove('hidden');
-
-//     // Submit form with ajax
-//     await fetch('/cart/add', {
-//       method: 'post',
-//       body: new FormData(form)
-//     });
-
-//     // Update Cart
-//     await updateCartDrawer();
-//   });
-// });
-
-// ===============
-
 window.addEventListener('submit', async e => {
   e.preventDefault();
 
@@ -163,29 +140,6 @@ window.addEventListener('submit', async e => {
     await updateCartDrawer();
   }
 });
-
-// document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
-//   form.addEventListener('submit', async e => {
-//     e.preventDefault();
-
-//     // Open cart drawer
-//     openCartDrawer();
-
-//     // Activate loader
-//     document.querySelector('.cart-header-loader').classList.remove('hidden');
-
-//     // Submit form with ajax
-//     await fetch('/cart/add', {
-//       method: 'post',
-//       body: new FormData(form)
-//     });
-
-//     // Update Cart
-//     await updateCartDrawer();
-//   });
-// });
-
-// =============
 
 // Open cart drawer
 document.querySelector('.signup__cart').addEventListener('click', () => {
